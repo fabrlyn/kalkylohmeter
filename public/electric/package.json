@@ -1,0 +1,12 @@
+{
+  "name": "electric",
+  "version": "0.1.0",
+  "files": [
+    "electric_bg.wasm",
+    "electric.js",
+    "electric.d.ts"
+  ],
+  "module": "electric.js",
+  "types": "electric.d.ts",
+  "sideEffects": false
+}

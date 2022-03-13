@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkylohmeter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+    <script src="elm.js"></script>
+  </head>
+  <body>
+    <script type="module">
+      import init, * as electric from "./electric/electric.js"
+      const app = Elm.Main.init({});
+
+      async function setup() {
+        await init();
+
+        console.log({app})
+        app.ports.wasmLoaded.send(true)
+
+        app.ports.calculateVolts.subscribe(function(data) {
+          const result = electric.volts(data.amps, data.ohm)
+          app.ports.calculatedVolts.send(result)
+        })
+
+        app.ports.calculateAmps.subscribe(function(data) {
+          const result = electric.amps(data.volts, data.ohm)
+          app.ports.calculatedAmps.send(result)
+        })
+
+        app.ports.calculateOhm.subscribe(function(data) {
+          const result = electric.ohm(data.volts, data.amps)
+          app.ports.calculatedOhm.send(result)
+        })
+        
+      }
+      setup();
+
+    </script>
+  </body>
+</html>
+
